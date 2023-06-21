@@ -31,7 +31,7 @@ JPA, JSOUP, Morphology Library Lucene, SQL, Spring Framework.
 ## Индексация сайтов:
 
 ### 1.	В адресной строке браузера наберите localhost:8080. Нажмите на клавиатуре Enter.
-![image](/images/1.jpg)
+
 
 ### 2.	В верхнем поле введите root, в нижнем - Katya_1984Ya, нажмите кнопку Sign in.
 
@@ -47,7 +47,7 @@ JPA, JSOUP, Morphology Library Lucene, SQL, Spring Framework.
 ## Поиск по сайту:
 
 ### 1.	В адресной строке браузера наберите localhost:8080. Нажмите на клавиатуре Enter.
-![image](/images/1.jpg)
+
 
 ### 2.	В верхнем поле введите root, в нижнем - Katya_1984Ya, нажмите кнопку Sign in.
 ![image](/images/1.5.jpg)
