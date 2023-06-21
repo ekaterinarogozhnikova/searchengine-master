@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="SearchEngine_5" />
+        <module name="SearchEngine_8" />
+        <module name="SearchEngine_15" />
+        <module name="SearchEngine_7" />
+        <module name="SearchEngine" />
+        <module name="search_engine_project" />
+        <module name="SearchEngine_9" />
+        <module name="SearchEngine-master" />
+        <module name="SearchEngine_4" />
+        <module name="SearchEngine_11" />
+        <module name="SearchEngine_3" />
+        <module name="SearchEngine_10" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SearchEngine" options="-parameters" />
+      <module name="SearchEngine-master" options="-parameters" />
+      <module name="SearchEngine_10" options="-parameters" />
+      <module name="SearchEngine_11" options="-parameters" />
+      <module name="SearchEngine_15" options="-parameters" />
+      <module name="SearchEngine_3" options="-parameters" />
+      <module name="SearchEngine_4" options="-parameters" />
+      <module name="SearchEngine_5" options="-parameters" />
+      <module name="SearchEngine_7" options="-parameters" />
+      <module name="SearchEngine_8" options="-parameters" />
+      <module name="SearchEngine_9" options="-parameters" />
+      <module name="search_engine_project" options="-parameters" />
+    </option>
+  </component>
+</project>
