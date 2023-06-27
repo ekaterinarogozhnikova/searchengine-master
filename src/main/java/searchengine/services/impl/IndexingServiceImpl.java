@@ -35,7 +35,7 @@ public class IndexingServiceImpl implements IndexingService {
     private final SitesList sitesList;
 
     @Override
-    public boolean urlIndexing(String url) {
+    public boolean urlIndexing(String url) { //проверяет, можно ли индексировать указанный URL-адрес, если да, то -> SiteIndexed
         if (urlCheck(url)) {
             log.info("Start reindexing site - " + url);
             executorService = Executors.newFixedThreadPool(processorCoreCount);
@@ -49,7 +49,7 @@ public class IndexingServiceImpl implements IndexingService {
     }
 
     @Override
-    public boolean indexingAll() {
+    public boolean indexingAll() { // запускает процесс индексации всех сайтов из списка sitesList, -> SiteIndexed
         if (isIndexingActive()) {
             log.debug("Indexing already started");
             return false;
@@ -69,7 +69,7 @@ public class IndexingServiceImpl implements IndexingService {
     }
 
     @Override
-    public boolean stopIndexing() {
+    public boolean stopIndexing() { // останавливает процесс индексации, если он был запущен
         if (isIndexingActive()) {
             log.info("Indexing was stopped");
             executorService.shutdownNow();
@@ -80,7 +80,7 @@ public class IndexingServiceImpl implements IndexingService {
         }
     }
 
-    private boolean isIndexingActive() {
+    private boolean isIndexingActive() { // проверяет, запущен ли процесс индексации, путем поиска сайтов со статусом INDEXING в базе данных
         siteRepository.flush();
         Iterable<SitePage> siteList = siteRepository.findAll();
         for (SitePage site : siteList) {
@@ -91,7 +91,7 @@ public class IndexingServiceImpl implements IndexingService {
         return false;
     }
 
-    private boolean urlCheck(String url) {
+    private boolean urlCheck(String url) { //  проверяет, содержится ли указанный URL-адрес в списке сайтов sitesList
         List<Site> urlList = sitesList.getSites();
         for (Site site : urlList) {
             if (site.getUrl().equals(url)) {

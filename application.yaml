@@ -14,9 +14,9 @@ spring:
     hibernate:
       ddl-auto: update
       generate-ddl: true
-    #  show-sql: true
+
     open-in-view: true
-  # logs
+
   logging:
       level:
         org.hibernate.SQL: info
@@ -24,10 +24,10 @@ spring:
 
 indexing-settings:
   sites:
-#        - url: https://www.lenta.ru
-#          name: Лента.ру
-#        - url: https://www.dimonvideo.ru
-#          name: DimonVideo
+#      - url: https://www.lenta.ru
+#        name: Лента.ру
+#      - url: https://www.dimonvideo.ru
+#        name: DimonVideo
       - url: http://www.playback.ru
         name: PlayBack.Ru
       - url: http://radiomv.ru

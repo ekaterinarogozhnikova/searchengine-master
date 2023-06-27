@@ -63,6 +63,7 @@ public class UrlParser extends RecursiveTask<List<StatisticsPage>> {
             log.debug("Parsing error - " + address);
             StatisticsPage statisticsPage = new StatisticsPage(address, "", 500);
             statisticsPageList.add(statisticsPage);
+
         }
         return statisticsPageList;
     }

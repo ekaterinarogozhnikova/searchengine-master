@@ -27,7 +27,7 @@ public class Page implements Serializable {
     private String path;
 
     private int code;
-    @Column(length = 16777215, columnDefinition = "mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
+    @Column(length = 16777215, columnDefinition = "mediumtext")
     private String content;
 
 

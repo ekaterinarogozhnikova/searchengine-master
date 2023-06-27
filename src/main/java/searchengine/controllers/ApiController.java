@@ -50,7 +50,7 @@ public class ApiController {
         if (indexingService.indexingAll()) {
             return new ResponseEntity<>(new Response(true), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new BadRequest(false, "Indexing not started"),
+            return new ResponseEntity<>(new BadRequest(false, "Индексация уже запущена"),
                     HttpStatus.BAD_REQUEST);
         }
     }
@@ -62,7 +62,7 @@ public class ApiController {
             return new ResponseEntity<>(new Response(true), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new BadRequest(false,
-                    "Indexing was not stopped because it was not started"), HttpStatus.BAD_REQUEST);
+                    "Индексация не запущена"), HttpStatus.BAD_REQUEST);
         }
     }
 

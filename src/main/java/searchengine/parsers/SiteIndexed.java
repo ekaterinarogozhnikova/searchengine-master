@@ -34,33 +34,40 @@ public class SiteIndexed implements Runnable {
     private final String url;
     private final SitesList sitesList;
 
-    private List<StatisticsPage> getPageDtoList() throws InterruptedException {
+    private List<StatisticsPage> getPageDtoList() throws InterruptedException { // возвращает список страниц сайта в виде объектов класса StatisticsPage
         if (!Thread.interrupted()) {
-            String urlFormat = url + "/";
+            String urlFormat = url + "/"; //формирует URL адрес сайта
+            // Создаются объекты Vector для хранения списка страниц сайта и списка URL адресов
             List<StatisticsPage> statisticsPageVector = new Vector<>();
             List<String> urlList = new Vector<>();
-            ForkJoinPool forkJoinPool = new ForkJoinPool(coreAmount);
-            List<StatisticsPage> pages = forkJoinPool.invoke(new UrlParser(urlFormat, statisticsPageVector, urlList));
-            return new CopyOnWriteArrayList<>(pages);
-        } else throw new InterruptedException();
+            ForkJoinPool forkJoinPool = new ForkJoinPool(coreAmount); //создается объект ForkJoinPool для параллельной обработки URL адресов, количество потоков равно количеству ядер процессора
+            List<StatisticsPage> pages = forkJoinPool.invoke(new UrlParser(urlFormat, statisticsPageVector, urlList)); // Метод invoke запускает задачу UrlParser, которая парсит страницы сайта и добавляет их в список statisticsPageVector
+            return new CopyOnWriteArrayList<>(pages); // Возвращается новый список страниц сайта в виде объектов CopyOnWriteArrayList, который является потокобезопасным
+        } else throw new InterruptedException(); // Если процесс был прерван, выбрасывается исключение InterruptedException
     }
 
     @Override
-    public void run() {
-        if (siteRepository.findByUrl(url) != null) {
+    public void run() { // запускает процесс индексации
+        if (siteRepository.findByUrl(url) != null) { // проверяет, есть ли уже запись о сайте в базе данных
             log.info("Start delete site data - " + url);
-            deleteDataFromSite();
+            deleteDataFromSite(); // удаляет все данные о этом сайте в базе
         }
         log.info("Indexing - " + url + " " + getName());
-        saveDateSite();
+        saveDateSite(); // сохраняет информацию о сайте в базу данных
         try {
-            List<StatisticsPage> statisticsPageList = getPageDtoList();
-            saveToBase(statisticsPageList);
-            getLemmasPage();
-            indexingWords();
+            List<StatisticsPage> statisticsPageList = getPageDtoList(); //  получает список страниц сайта.
+            saveToBase(statisticsPageList); // сохраняет информацию о страницах в базу данных
+            getLemmasPage(); // извлекает из страниц леммы
+            indexingWords(); // происходит индексация слов, то есть создание обратного индекса, который позволяет быстро находить страницы по словам
         } catch (InterruptedException e) {
             log.error("Indexing stopped - " + url);
-            errorSite();
+//            errorSite();
+
+            SitePage sitePage = siteRepository.findByUrl(url);
+            sitePage.setLastError("Indexing stopped");
+            sitePage.setStatus(Status.FAILED);
+            sitePage.setStatusTime(new Date());
+            siteRepository.save(sitePage);
         }
     }
 
@@ -132,12 +139,14 @@ public class SiteIndexed implements Runnable {
     }
 
     private void saveDateSite() {
-        SitePage sitePage = new SitePage();
-        sitePage.setUrl(url);
+        SitePage sitePage = siteRepository.findByUrl(url);
+        if (sitePage == null) {
+            sitePage = new SitePage();
+            sitePage.setUrl(url);
+        }
         sitePage.setName(getName());
         sitePage.setStatus(Status.INDEXING);
         sitePage.setStatusTime(new Date());
-        siteRepository.flush();
         siteRepository.save(sitePage);
     }
 
@@ -151,12 +160,14 @@ public class SiteIndexed implements Runnable {
         return "";
     }
 
-    private void errorSite() {
-        SitePage sitePage = new SitePage();
-        sitePage.setLastError("Indexing stopped");
-        sitePage.setStatus(Status.FAILED);
-        sitePage.setStatusTime(new Date());
-        siteRepository.save(sitePage);
-    }
+//    private void errorSite() {
+//
+//        SitePage sitePage = new SitePage();
+//        sitePage.setLastError("Indexing stopped");
+//        sitePage.setStatus(Status.FAILED);
+//        sitePage.setStatusTime(new Date());
+//        siteRepository.save(sitePage);
+//
+//    }
 }
 
